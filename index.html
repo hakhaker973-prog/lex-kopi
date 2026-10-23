@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5f0">
+  <meta name="description" content="LEX KOPI — kopi favorit, suasana sederhana. Lihat menu dan pesan dengan mudah.">
+  <title>LEX KOPI — Coffee & More</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="LEX KOPI beranda">
+      <span class="brand-mark">L<span>X</span></span>
+      <span class="brand-name">LEX KOPI<small>COFFEE & MORE</small></span>
+    </a>
+    <nav aria-label="Navigasi utama">
+      <a href="#menu">Menu</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#pesan">Pesan</a>
+    </nav>
+    <a class="header-cart" href="#pesan" aria-label="Lihat keranjang">Keranjang <span id="header-cart-count">0</span></a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> GOOD COFFEE, GOOD MOOD</p>
+        <h1>Temukan jeda<br>favoritmu di <em>LEX.</em></h1>
+        <p class="hero-description">Kopi pilihan dan minuman favorit untuk menemani cerita, kerja, atau waktu santaimu.</p>
+        <a class="primary-button" href="#menu">Jelajahi menu <span aria-hidden="true">↘</span></a>
+        <div class="hero-note"><span class="note-line"></span> SEDUH • NIKMATI • ULANGI</div>
+      </div>
+      <div class="hero-art" aria-label="Ilustrasi secangkir kopi">
+        <div class="art-circle circle-one"></div><div class="art-circle circle-two"></div>
+        <div class="steam steam-one"></div><div class="steam steam-two"></div>
+        <div class="coffee-cup"><div class="coffee-top"><span>LEX</span></div><div class="cup-body"></div><div class="cup-handle"></div><div class="cup-shadow"></div></div>
+        <div class="art-label label-top">FRESHLY<br>BREWED</div>
+        <div class="art-label label-bottom">EST. WITH<br>GOOD TASTE</div>
+        <span class="art-star star-one">✳</span><span class="art-star star-two">✦</span>
+      </div>
+    </section>
+
+    <section class="menu-section section-wrap" id="menu">
+      <div class="section-heading">
+        <div><p class="eyebrow">PILIHAN HARI INI</p><h2>Menu <em>favorit.</em></h2></div>
+        <p>Temukan minuman yang pas untuk mood kamu.</p>
+      </div>
+      <div class="menu-tools">
+        <label class="search-box"><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Cari menu..." aria-label="Cari menu"></label>
+        <div class="filter-list" id="filter-list" aria-label="Filter kategori">
+          <button class="filter-button active" data-category="Semua">Semua</button>
+          <button class="filter-button" data-category="Coffee">Coffee</button>
+          <button class="filter-button" data-category="Non-Coffee">Non-Coffee</button>
+          <button class="filter-button" data-category="Snack">Snack</button>
+        </div>
+      </div>
+      <div class="product-grid" id="product-grid" aria-live="polite"></div>
+      <p class="empty-state" id="empty-state" hidden>Menu tidak ditemukan. Coba kata kunci atau kategori lain.</p>
+    </section>
+
+    <section class="about-section" id="tentang">
+      <div class="about-symbol">L<span>X</span></div>
+      <div><p class="eyebrow">CERITA LEX KOPI</p><h2>Sederhana dalam gaya,<br><em>istimewa dalam rasa.</em></h2></div>
+      <p class="about-copy">LEX KOPI hadir untuk menemani momen kecil yang berarti. Pilih minuman favoritmu, pesan dengan mudah, lalu nikmati harimu.</p>
+    </section>
+
+    <section class="order-section section-wrap" id="pesan">
+      <div class="section-heading order-heading">
+        <div><p class="eyebrow">SIAP DINIKMATI?</p><h2>Keranjang <em>kamu.</em></h2></div>
+        <button class="text-button" id="clear-cart">Kosongkan keranjang ↗</button>
+      </div>
+      <div class="order-layout">
+        <div class="cart-panel">
+          <div class="panel-title"><h3>Pesanan</h3><span id="cart-count-label">0 item</span></div>
+          <div id="cart-items" class="cart-items"><div class="cart-empty"><span>＋</span><p>Keranjang masih kosong.</p><small>Tambahkan menu favoritmu dari katalog.</small></div></div>
+          <div class="total-row"><span>Total harga</span><strong id="cart-total">Rp0</strong></div>
+        </div>
+        <form class="checkout-panel" id="checkout-form">
+          <h3>Detail pemesanan</h3>
+          <label for="customer-name">Nama pemesan</label>
+          <input id="customer-name" name="customer-name" type="text" placeholder="Nama kamu" required maxlength="60">
+          <label for="order-type">Jenis pesanan</label>
+          <select id="order-type" name="order-type">
+            <option value="Ambil di kedai">Ambil di kedai</option>
+            <option value="Dine-in / makan di tempat">Dine-in / makan di tempat</option>
+            <option value="Tanya pengantaran">Tanya pengantaran</option>
+          </select>
+          <label for="order-notes">Catatan <span>(opsional)</span></label>
+          <textarea id="order-notes" name="order-notes" rows="3" placeholder="Contoh: gula sedikit, es dipisah..."></textarea>
+          <button class="whatsapp-button" type="submit"><span>↗</span> Pesan melalui WhatsApp</button>
+          <p class="checkout-hint">Pesanan akan dirangkum di WhatsApp. Periksa kembali lalu tekan tombol kirim di WhatsApp.</p>
+          <p class="config-warning" id="config-warning" hidden>Nomor WhatsApp belum diatur. Buka <code>script.js</code> dan ganti nomor contoh dengan nomor LEX KOPI.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="footer-brand" href="#">LEX KOPI<span>®</span></a>
+    <p>Teman baik untuk setiap jeda.</p>
+    <small>© <span id="current-year"></span> LEX KOPI. Dibuat dengan ☕</small>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
