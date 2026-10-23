@@ -16,7 +16,8 @@ const products = [
   {id:7,name:"Lemon Tea",category:"Non-Coffee",price:15000,description:"Teh segar dengan rasa lemon ringan.",drink:"#c5a84e",bg:"#f1ecd8"},
   {id:8,name:"Kentang Goreng",category:"Snack",price:16000,description:"Camilan renyah untuk menemani kopi.",drink:"#d1a34f",bg:"#efe7d6",snack:true},
   {id:9,name:"Roti Bakar",category:"Snack",price:18000,description:"Roti panggang hangat untuk teman minum.",drink:"#b77e4b",bg:"#f0e4d3",snack:true},
-  {id:10,name:"Kopi Susu LEX",category:"Coffee",price:20000,description:"Racikan kopi susu khas LEX KOPI.",drink:"#986448",bg:"#e9e5d9"}
+  {id:10,name:"Kopi Susu LEX",category:"Coffee",price:20000,description:"Racikan kopi susu khas LEX KOPI.",drink:"#986448",bg:"#e9e5d9"},
+  {id:11,name:"Teh dingin",category:"Non-Coffee",price:6000,description:"Enak waktu buka puasa.",drink:"#FF0000",bg:"#800000"}
 ];
 
 const cart = new Map();
