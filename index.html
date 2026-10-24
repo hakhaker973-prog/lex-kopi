@@ -80,12 +80,18 @@
           <h3>Detail pemesanan</h3>
           <label for="customer-name">Nama pemesan</label>
           <input id="customer-name" name="customer-name" type="text" placeholder="Nama kamu" required maxlength="60">
-          <label for="order-type">Jenis pesanan</label>
-          <select id="order-type" name="order-type">
-            <option value="Ambil di kedai">Ambil di kedai</option>
-            <option value="Dine-in / makan di tempat">Dine-in / makan di tempat</option>
-            <option value="Tanya pengantaran">Tanya pengantaran</option>
+         <label for="order-type">Jenis pesanan</label>
+          <select id="order-type" name="order-type" required>
+          <option value="Dine-in">Makan di tempat</option>
+          <option value="Takeaway">Bungkus / Bawa Pulang</option>
+        </select>
+
+        <div id="table-number-group">
+          <label for="table-number">Nomor meja</label>
+          <select id="table-number" name="table-number">
+            <option value="">Pilih nomor meja</option>
           </select>
+        </div>
           <label for="order-notes">Catatan <span>(opsional)</span></label>
           <textarea id="order-notes" name="order-notes" rows="3" placeholder="Contoh: gula sedikit, es dipisah..."></textarea>
           <button class="whatsapp-button" type="submit"><span>↗</span> Pesan melalui WhatsApp</button>
