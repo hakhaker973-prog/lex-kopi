@@ -65,7 +65,8 @@ h1 em,h2 em{font-weight:500;color:var(--green)}
     height: 280px;
     position: relative;
     overflow: hidden;
-    background: #ffffff;
+    background: var(--visual-bg, #eece3);
+    border-radius: o;
 }
 
 .product-visual img {
