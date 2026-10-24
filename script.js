@@ -7,7 +7,7 @@
 const WHATSAPP_NUMBER = "6282281398048"; // GANTI dengan nomor WhatsApp kedai yang aktif.
 
 const products = [
-  {id:1,name:"Kopi Susu Gula Aren",category:"Coffee",price:18000,description:"Espresso, susu creamy, dan manis gula aren.",drink:"#a87955",bg:"#eee7dc"},
+  {id:1,name:"Kopi Susu Gula Aren",category:"Coffee",price:18000,description:"Espresso, susu creamy, dan manis gula aren.",image:"kopi-susu-gula-aren-dingin.jpeg",drink:"#a87955",bg:"#eee7dc"},
   {id:2,name:"Americano",category:"Coffee",price:15000,description:"Kopi hitam dengan rasa bold dan clean.",image:"americano-dingin.jpeg",drink:"#513c30",bg:"#e9e9df"},
   {id:3,name:"Cappuccino",category:"Coffee",price:20000,description:"Espresso dengan susu lembut dan foam.",image:"cappucino-dingin.jpeg",drink:"#b38b66",bg:"#f0e7d9"},
   {id:4,name:"Caramel Latte",category:"Coffee",price:22000,description:"Latte lembut dengan sentuhan karamel.",image:"caramel-latte-dingin.jpeg",drink:"#bc8d5e",bg:"#eee5d8"},
