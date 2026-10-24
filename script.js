@@ -139,52 +139,115 @@ document.getElementById("clear-cart").addEventListener("click", () => {
   renderCart();
 });
 
-document.getElementById("checkout-form").addEventListener("submit", event => {
-  event.preventDefault();
-  if (cart.size === 0) {
-    alert("Keranjang masih kosong. Tambahkan menu terlebih dahulu.");
-    document.getElementById("menu").scrollIntoView({behavior:"smooth"});
-    return;
-  }
+const orderTypeSelect = document.getElementById("order-type");
+const tableNumberSelect = document.getElementById("table-number");
+const tableNumberGroup = document.getElementById("table-number-group");
 
-  const customerName = document.getElementById("customer-name").value.trim();
-  const orderType = document.getElementById("order-type").value;
-  const notes = document.getElementById("order-notes").value.trim();
-  if (!customerName) {
-    document.getElementById("customer-name").focus();
-    return;
-  }
+// Membuat pilihan Meja 01 sampai Meja 100 secara otomatis.
+for (let i = 1; i <= 100; i++) {
+  const number = String(i).padStart(2, "0");
+  const option = document.createElement("option");
 
-  const entries = [...cart.entries()];
-  const total = entries.reduce((sum, [id, quantity]) => {
-    return sum + products.find(item => item.id === id).price * quantity;
-  }, 0);
-  const lines = [
-    "Halo LEX KOPI, saya ingin memesan:",
-    "",
-    ...entries.map(([id, quantity]) => {
-      const product = products.find(item => item.id === id);
-      return `• ${product.name} x${quantity} — ${rupiah(product.price * quantity)}`;
-    }),
-    "",
-    `Total: ${rupiah(total)}`,
-    `Nama: ${customerName}`,
-    `Jenis pesanan: ${orderType}`,
-    ...(notes ? [`Catatan: ${notes}`] : []),
-    "",
-    "Mohon konfirmasi pesanan saya. Terima kasih!"
-  ];
+  option.value = `Meja ${number}`;
+  option.textContent = `Meja ${number}`;
 
- if (!/^\d{8,15}$/.test(WHATSAPP_NUMBER)) {
-  document.getElementById("config-warning").hidden = false;
-  alert("Nomor WhatsApp tidak valid. Periksa kembali nomor yang digunakan.");
-  return;
+  tableNumberSelect.appendChild(option);
 }
 
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
-  window.open(url, "_blank", "noopener,noreferrer");
-});
+// Menampilkan nomor meja hanya untuk pesanan dine-in.
+function updateOrderType() {
+  const isDineIn = orderTypeSelect.value === "Dine-in";
 
+  tableNumberGroup.hidden = !isDineIn;
+  tableNumberSelect.required = isDineIn;
+
+  if (!isDineIn) {
+    tableNumberSelect.value = "";
+  }
+}
+
+orderTypeSelect.addEventListener("change", updateOrderType);
+updateOrderType();
+
+// Memproses pesanan ke WhatsApp.
+document.getElementById("checkout-form")
+  .addEventListener("submit", event => {
+    event.preventDefault();
+
+    if (cart.size === 0) {
+      alert("Keranjang masih kosong. Tambahkan menu terlebih dahulu.");
+      document.getElementById("menu").scrollIntoView({
+        behavior: "smooth"
+      });
+      return;
+    }
+
+    const customerName = document
+      .getElementById("customer-name").value.trim();
+
+    const orderType = orderTypeSelect.value;
+    const tableNumber = tableNumberSelect.value;
+    const notes = document
+      .getElementById("order-notes").value.trim();
+
+    if (!customerName) {
+      document.getElementById("customer-name").focus();
+      return;
+    }
+
+    if (orderType === "Dine-in" && !tableNumber) {
+      alert("Silakan pilih nomor meja terlebih dahulu.");
+      tableNumberSelect.focus();
+      return;
+    }
+
+    const entries = [...cart.entries()];
+
+    const total = entries.reduce((sum, [id, quantity]) => {
+      const product = products.find(item => item.id === id);
+      return sum + product.price * quantity;
+    }, 0);
+
+    const lines = [
+      "Halo LEX KOPI, saya ingin memesan:",
+      "",
+      `Jenis pesanan: ${
+        orderType === "Dine-in"
+          ? "Makan di tempat (Dine-in)"
+          : "Bungkus / Bawa Pulang (Takeaway)"
+      }`,
+      ...(orderType === "Dine-in"
+        ? [`Nomor meja: ${tableNumber}`]
+        : []),
+      `Nama pemesan: ${customerName}`,
+      "",
+      "Daftar pesanan:",
+      ...entries.map(([id, quantity]) => {
+        const product = products.find(item => item.id === id);
+        return `- ${product.name} x${quantity} — ${
+          rupiah(product.price * quantity)
+        }`;
+      }),
+      "",
+      `Total harga: ${rupiah(total)}`,
+      ...(notes ? [`Catatan: ${notes}`] : []),
+      "",
+      "Mohon konfirmasi pesanan saya. Terima kasih!"
+    ];
+
+    if (!/^\d{8,15}$/.test(WHATSAPP_NUMBER)) {
+      document.getElementById("config-warning").hidden = false;
+      alert("Nomor WhatsApp tidak valid. Periksa kembali nomor kedai.");
+      return;
+    }
+
+    const url =
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${
+        encodeURIComponent(lines.join("\n"))
+      }`;
+
+    window.open(url, "_blank", "noopener,noreferrer");
+  });
 document.getElementById("current-year").textContent = new Date().getFullYear();
 renderProducts();
 renderCart();
