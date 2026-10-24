@@ -167,6 +167,154 @@ h1 em,h2 em{font-weight:500;color:var(--green)}
   background: var(--white);
   padding: 11px 12px;
   font: inherit;
+    .sales-section {
+  padding-top: 60px;
+  padding-bottom: 70px;
+  background: var(--white);
+}
+
+.sales-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.sales-card,
+.sales-panel {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.sales-card span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.sales-card strong {
+  color: var(--green);
+  font-size: 20px;
+  overflow-wrap: anywhere;
+}
+
+.sales-panel {
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+
+.sales-panel h3 {
+  font-size: 16px;
+  margin-bottom: 18px;
+}
+
+.sales-panel label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 12px 0 6px;
+}
+
+.sales-panel input,
+.sales-panel select,
+.sales-panel textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 11px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--white);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+}
+
+.sales-panel button {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 5px;
+  background: var(--green);
+  color: white;
+  font-weight: 600;
+}
+
+.sales-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.sales-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.sales-table th,
+.sales-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.sales-table th {
+  background: var(--paper);
+}
+
+.expense-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+}
+
+@media (max-width: 700px) {
+  .sales-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sales-card {
+    padding: 13px;
+  }
+
+  .sales-card strong {
+    font-size: 17px;
+  }
+}
+
+@media print {
+  .site-header,
+  .site-footer,
+  .hero,
+  .menu-section,
+  .about-section,
+  .order-section,
+  .sales-panel form,
+  #sales-filter-date,
+  .sales-panel button {
+    display: none !important;
+  }
+
+  .sales-section {
+    display: block;
+    padding: 0;
+  }
+
+  .sales-panel,
+  .sales-card {
+    break-inside: avoid;
+  }
+
+  .sales-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
   font-size: 11px;
   color: var(--ink);
 }
