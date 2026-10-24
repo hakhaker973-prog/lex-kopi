@@ -52,24 +52,26 @@ function renderProducts() {
     (product.name.toLocaleLowerCase("id-ID").includes(query) ||
      product.description.toLocaleLowerCase("id-ID").includes(query))
   );
-  productGrid.innerHTML = filtered.map(product => `
-    <article class="product-card">
-      <div class="product-visual" style="--visual-bg:${product.bg}">
-  <span class="product-category">${product.category.toUpperCase()}</span>
-  ${product.image
-    ? `<img src="${product.image}" alt="${product.name}" style="width:100%;height:180px;object-fit:cover;border-radius:12px;">`
-    : visualFor(product)}
-</div>
+ productGrid.innerHTML = filtered.map(product => `
+  <article class="product-card">
+    <div class="product-visual" style="--visual-bg:${product.bg}">
+      <span class="product-category">${product.category.toUpperCase()}</span>
+      ${product.image
+        ? `<img src="${product.image}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;">`
+        : visualFor(product)}
+    </div>
+    <div class="product-info">
+      <h3>${product.name}</h3>
+      <p>${product.description}</p>
+      <div class="product-bottom">
+        <span class="product-price">${rupiah(product.price)}</span>
+        <button class="add-button" data-add="${product.id}"
+          aria-label="Tambah ${product.name} ke keranjang"
+          title="Tambah ke keranjang">+</button>
       </div>
-      <div class="product-info">
-        <h3>${product.name}</h3>
-        <p>${product.description}</p>
-        <div class="product-bottom">
-          <span class="product-price">${rupiah(product.price)}</span>
-          <button class="add-button" data-add="${product.id}" aria-label="Tambah ${product.name} ke keranjang" title="Tambah ke keranjang">+</button>
-        </div>
-      </div>
-    </article>`).join("");
+    </div>
+  </article>
+`).join("");
   emptyState.hidden = filtered.length > 0;
 }
 
