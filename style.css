@@ -65,13 +65,13 @@ h1 em,h2 em{font-weight:500;color:var(--green)}
     height: 280px;
     position: relative;
     overflow: hidden;
-    background: var(--visual-bg, #eeece3);
+    background: #ffffff;
 }
 
 .product-visual img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
     display: block;
 }
