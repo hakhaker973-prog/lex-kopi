@@ -14,8 +14,8 @@ const products = [
   {id:5,name:"Matcha Latte",category:"Non-Coffee",price:22000,description:"Matcha earthy berpadu dengan susu.",image:"matcha-latte-dingin.jpeg",drink:"#8c9a67",bg:"#e7eadd"},
   {id:6,name:"Chocolate",category:"Non-Coffee",price:20000,description:"Cokelat nikmat untuk teman santai.",image:"ice-coklat.jpeg",drink:"#704b3c",bg:"#eee4de"},
   {id:7,name:"Lemon Tea",category:"Non-Coffee",price:15000,description:"Teh segar dengan rasa lemon ringan.",image:"lemon-tea.jpeg",drink:"#c5a84e",bg:"#f1ecd8"},
-  {id:8,name:"Kentang Goreng",category:"Snack",price:16000,description:"Camilan renyah untuk menemani kopi.",drink:"#d1a34f",bg:"#efe7d6",snack:true},
-  {id:9,name:"Roti Bakar",category:"Snack",price:18000,description:"Roti panggang hangat untuk teman minum.",drink:"#b77e4b",bg:"#f0e4d3",snack:true},
+  {id:8,name:"Kentang Goreng",category:"Snack",price:16000,description:"Camilan renyah untuk menemani kopi.",image:"kentang-goreng.jpeg",drink:"#d1a34f",bg:"#efe7d6",snack:true},
+  {id:9,name:"Roti Bakar",category:"Snack",price:18000,description:"Roti panggang hangat untuk teman minum.",image:"roti-bakar.jpeg",drink:"#b77e4b",bg:"#f0e4d3",snack:true},
   {id:10,name:"Kopi Susu LEX",category:"Coffee",price:20000,description:"Racikan kopi susu khas LEX KOPI.",image:"images-kopi-susu.jpeg",drink:"#986448",bg:"#e9e5d9"},
   {id:11,name:"Teh dingin",category:"Non-Coffee",price:6000,description:"Enak waktu buka puasa.",image:"teh-dingin.jpeg",drink:"#FF0000",bg:"#800000"}
 ];
