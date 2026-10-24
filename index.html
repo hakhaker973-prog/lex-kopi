@@ -19,6 +19,7 @@
       <a href="#tentang">Tentang</a>
       <a href="#pesan">Pesan</a>
     </nav>
+    <a href="#laporan">Buku Penjualan</a>
     <a class="header-cart" href="#pesan" aria-label="Lihat keranjang">Keranjang <span id="header-cart-count">0</span></a>
   </header>
 
@@ -101,7 +102,116 @@
       </div>
     </section>
   </main>
+<section class="sales-section section-wrap" id="laporan">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">ADMIN KEDAI</p>
+      <h2>Buku <em>penjualan harian.</em></h2>
+    </div>
+    <button type="button" onclick="window.print()">
+      Cetak laporan
+    </button>
+  </div>
 
+  <div class="sales-summary">
+    <div class="sales-card">
+      <span>Total penjualan</span>
+      <strong id="sales-total">Rp0</strong>
+    </div>
+    <div class="sales-card">
+      <span>Total pengeluaran</span>
+      <strong id="expense-total">Rp0</strong>
+    </div>
+    <div class="sales-card">
+      <span>Selisih penjualan</span>
+      <strong id="sales-profit">Rp0</strong>
+    </div>
+    <div class="sales-card">
+      <span>Jumlah transaksi</span>
+      <strong id="sales-count">0</strong>
+    </div>
+  </div>
+
+  <div class="sales-panel">
+    <h3>Catat penjualan</h3>
+    <form id="sales-form">
+      <label for="sales-date">Tanggal transaksi</label>
+      <input type="date" id="sales-date" required>
+
+      <label for="sales-name">Nama pelanggan / nomor pesanan</label>
+      <input id="sales-name" type="text"
+        placeholder="Contoh: Andi / Pesanan 001" required>
+
+      <label for="sales-type">Jenis pesanan</label>
+      <select id="sales-type" required>
+        <option value="Dine-in">Makan di tempat</option>
+        <option value="Takeaway">Bungkus / Bawa pulang</option>
+      </select>
+
+      <label for="sales-description">Rincian menu</label>
+      <textarea id="sales-description"
+        placeholder="Contoh: 2 Kopi Susu, 1 Roti Bakar"
+        required></textarea>
+
+      <label for="sales-amount">Total pembayaran (Rp)</label>
+      <input id="sales-amount" type="number"
+        min="1" step="1" placeholder="Contoh: 51000" required>
+
+      <label for="sales-payment">Metode pembayaran</label>
+      <select id="sales-payment" required>
+        <option value="Tunai">Tunai</option>
+        <option value="QRIS">QRIS</option>
+        <option value="Transfer">Transfer</option>
+        <option value="Lainnya">Lainnya</option>
+      </select>
+
+      <button type="submit">Simpan penjualan</button>
+    </form>
+  </div>
+
+  <div class="sales-panel">
+    <h3>Catat pengeluaran</h3>
+    <form id="expense-form">
+      <label for="expense-date">Tanggal pengeluaran</label>
+      <input type="date" id="expense-date" required>
+
+      <label for="expense-description">Keterangan pengeluaran</label>
+      <input id="expense-description" type="text"
+        placeholder="Contoh: Pembelian susu dan gula" required>
+
+      <label for="expense-amount">Jumlah pengeluaran (Rp)</label>
+      <input id="expense-amount" type="number"
+        min="1" step="1" placeholder="Contoh: 150000" required>
+
+      <button type="submit">Simpan pengeluaran</button>
+    </form>
+  </div>
+
+  <div class="sales-panel">
+    <h3>Riwayat transaksi</h3>
+    <label for="sales-filter-date">Lihat laporan tanggal</label>
+    <input type="date" id="sales-filter-date">
+
+    <div class="sales-table-wrap">
+      <table class="sales-table">
+        <thead>
+          <tr>
+            <th>Waktu</th>
+            <th>Pesanan</th>
+            <th>Jenis</th>
+            <th>Pembayaran</th>
+            <th>Total</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="sales-history"></tbody>
+      </table>
+    </div>
+
+    <h3>Riwayat pengeluaran</h3>
+    <div id="expense-history"></div>
+  </div>
+</section>
   <footer class="site-footer">
     <a class="footer-brand" href="#">LEX KOPI<span>®</span></a>
     <p>Teman baik untuk setiap jeda.</p>
