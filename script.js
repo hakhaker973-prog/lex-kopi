@@ -69,31 +69,54 @@ function visualFor(product) {
 
 function renderProducts() {
   const query = searchInput.value.trim().toLocaleLowerCase("id-ID");
+
   const filtered = products.filter(product =>
     (activeCategory === "Semua" || product.category === activeCategory) &&
-    (product.name.toLocaleLowerCase("id-ID").includes(query) ||
-     product.description.toLocaleLowerCase("id-ID").includes(query))
+    (
+      product.name.toLocaleLowerCase("id-ID").includes(query) ||
+      (product.description || "").toLocaleLowerCase("id-ID").includes(query)
+    )
   );
- productGrid.innerHTML = filtered.map(product => `
-  <article class="product-card">
-    <div class="product-visual" style="--visual-bg:${product.bg}">
-      <span class="product-category">${product.category.toUpperCase()}</span>
-      ${product.image
-        ? `<img src="${product.image}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;">`
-        : visualFor(product)}
-    </div>
-    <div class="product-info">
-      <h3>${product.name}</h3>
-      <p>${product.description}</p>
-      <div class="product-bottom">
-        <span class="product-price">${rupiah(product.price)}</span>
-        <button class="add-button" data-add="${product.id}"
-          aria-label="Tambah ${product.name} ke keranjang"
-          title="Tambah ke keranjang">+</button>
-      </div>
-    </div>
-  </article>
-`).join("");
+
+  productGrid.innerHTML = filtered.map(product => {
+    const stock = Number(product.stock) || 0;
+    const isOutOfStock = stock <= 0;
+
+    return `
+      <article class="product-card">
+        <div class="product-visual" style="--visual-bg:${product.bg}">
+          <span class="product-category">${product.category.toUpperCase()}</span>
+          ${product.image
+            ? `<img src="${product.image}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;">`
+            : visualFor(product)}
+        </div>
+
+        <div class="product-info">
+          <h3>${product.name}</h3>
+          <p>${product.description || ""}</p>
+
+          <p class="product-stock">
+            ${isOutOfStock ? "Stok habis" : `Stok tersedia: ${stock}`}
+          </p>
+
+          <div class="product-bottom">
+            <span class="product-price">${rupiah(product.price)}</span>
+
+            <button
+              class="add-button"
+              data-add="${product.id}"
+              aria-label="Tambah ${product.name} ke keranjang"
+              title="${isOutOfStock ? "Stok habis" : "Tambah ke keranjang"}"
+              ${isOutOfStock ? "disabled" : ""}
+            >
+              ${isOutOfStock ? "Habis" : "+"}
+            </button>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join("");
+
   emptyState.hidden = filtered.length > 0;
 }
 
@@ -115,36 +138,81 @@ function renderCart() {
   }
 
   cartItems.innerHTML = entries.map(([id, quantity]) => {
-    const product = products.find(item => item.id === id);
-    return `<div class="cart-row">
-      <div><div class="cart-row-name">${product.name}</div>
-      <div class="cart-row-price">${rupiah(product.price)} × ${quantity} = <strong>${rupiah(product.price * quantity)}</strong></div></div>
-      <div class="quantity-control" aria-label="Jumlah ${product.name}">
-        <button data-change="${id}" data-delta="-1" aria-label="Kurangi ${product.name}">−</button>
-        <span>${quantity}</span>
-        <button data-change="${id}" data-delta="1" aria-label="Tambah ${product.name}">+</button>
+  const product = products.find(item => item.id === id);
+  const stock = Number(product.stock) || 0;
+
+  return `<div class="cart-row">
+    <div>
+      <div class="cart-row-name">${product.name}</div>
+      <div class="cart-row-price">
+        ${rupiah(product.price)} × ${quantity} =
+        <strong>${rupiah(product.price * quantity)}</strong>
       </div>
-    </div>`;
-  }).join("");
+    </div>
+
+    <div class="quantity-control" aria-label="Jumlah ${product.name}">
+      <button data-change="${id}" data-delta="-1"
+        aria-label="Kurangi ${product.name}">−</button>
+
+      <span>${quantity}</span>
+
+      <button data-change="${id}" data-delta="1"
+        aria-label="Tambah ${product.name}"
+        ${quantity >= stock ? "disabled" : ""}>+</button>
+    </div>
+  </div>`;
+}).join("");
 }
 
 productGrid.addEventListener("click", event => {
   const button = event.target.closest("[data-add]");
   if (!button) return;
+
   const id = Number(button.dataset.add);
-  cart.set(id, (cart.get(id) || 0) + 1);
+  const product = products.find(item => item.id === id);
+
+  if (!product) return;
+
+  const stock = Number(product.stock) || 0;
+  const currentQuantity = cart.get(id) || 0;
+
+  if (currentQuantity >= stock) {
+    alert("Jumlah pesanan sudah mencapai batas stok tersedia.");
+    return;
+  }
+
+  cart.set(id, currentQuantity + 1);
   renderCart();
-  button.textContent = "✓";
-  window.setTimeout(() => { if (button.isConnected) button.textContent = "+"; }, 650);
+  renderProducts();
 });
 
 cartItems.addEventListener("click", event => {
   const button = event.target.closest("[data-change]");
   if (!button) return;
+
   const id = Number(button.dataset.change);
-  const next = (cart.get(id) || 0) + Number(button.dataset.delta);
-  if (next <= 0) cart.delete(id); else cart.set(id, next);
+  const product = products.find(item => item.id === id);
+
+  if (!product) return;
+
+  const currentQuantity = cart.get(id) || 0;
+  const delta = Number(button.dataset.delta);
+  const next = currentQuantity + delta;
+  const stock = Number(product.stock) || 0;
+
+  if (next > stock) {
+    alert("Jumlah pesanan melebihi stok tersedia.");
+    return;
+  }
+
+  if (next <= 0) {
+    cart.delete(id);
+  } else {
+    cart.set(id, next);
+  }
+
   renderCart();
+  renderProducts();
 });
 
 document.getElementById("filter-list").addEventListener("click", event => {
