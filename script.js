@@ -15,19 +15,32 @@ const supabase = createClient(
 */
 const WHATSAPP_NUMBER = "6282281398048"; // GANTI dengan nomor WhatsApp kedai yang aktif.
 
-const products = [
-  {id:1,name:"Kopi Susu Gula Aren",category:"Coffee",price:18000,description:"Espresso, susu creamy, dan manis gula aren.",image:"kopi-susu-gula-aren-dingin.jpeg",drink:"#a87955",bg:"#eee7dc"},
-  {id:2,name:"Americano",category:"Coffee",price:15000,description:"Kopi hitam dengan rasa bold dan clean.",image:"americano-dingin.jpeg",drink:"#513c30",bg:"#e9e9df"},
-  {id:3,name:"Cappuccino",category:"Coffee",price:20000,description:"Espresso dengan susu lembut dan foam.",image:"cappucino-dingin.jpeg",drink:"#b38b66",bg:"#f0e7d9"},
-  {id:4,name:"Caramel Latte",category:"Coffee",price:22000,description:"Latte lembut dengan sentuhan karamel.",image:"caramel-latte-dingin.jpeg",drink:"#bc8d5e",bg:"#eee5d8"},
-  {id:5,name:"Matcha Latte",category:"Non-Coffee",price:22000,description:"Matcha earthy berpadu dengan susu.",image:"matcha-latte-dingin.jpeg",drink:"#8c9a67",bg:"#e7eadd"},
-  {id:6,name:"Chocolate",category:"Non-Coffee",price:20000,description:"Cokelat nikmat untuk teman santai.",image:"ice-coklat.jpeg",drink:"#704b3c",bg:"#eee4de"},
-  {id:7,name:"Lemon Tea",category:"Non-Coffee",price:15000,description:"Teh segar dengan rasa lemon ringan.",image:"lemon-tea.jpeg",drink:"#c5a84e",bg:"#f1ecd8"},
-  {id:8,name:"Kentang Goreng",category:"Snack",price:16000,description:"Camilan renyah untuk menemani kopi.",image:"kentang-goreng.jpeg",drink:"#d1a34f",bg:"#efe7d6",snack:true},
-  {id:9,name:"Roti Bakar",category:"Snack",price:18000,description:"Roti panggang hangat untuk teman minum.",image:"roti-bakar.jpeg",drink:"#b77e4b",bg:"#f0e4d3",snack:true},
-  {id:10,name:"Kopi Susu LEX",category:"Coffee",price:20000,description:"Racikan kopi susu khas LEX KOPI.",image:"images-kopi-susu.jpeg",drink:"#986448",bg:"#e9e5d9"},
-  {id:11,name:"Teh dingin",category:"Non-Coffee",price:6000,description:"Enak waktu buka puasa.",image:"teh-dingin.jpeg",drink:"#FF0000",bg:"#800000"}
-];
+let products = [];
+
+async function loadProducts() {
+  const { data, error } = await supabase
+    .from("product-lex-kopi")
+    .select("id, name, price, image_url, category, stock, description")
+    .order("id", { ascending: true });
+
+  if (error) {
+    console.error("Gagal mengambil produk:", error);
+    document.getElementById("empty-state").textContent =
+      "Menu gagal dimuat. Silakan coba lagi.";
+    document.getElementById("empty-state").hidden = false;
+    return;
+  }
+
+  products = data.map(product => ({
+    ...product,
+    image: product.image_url,
+    drink: "#986448",
+    bg: "#e9e5d9"
+  }));
+
+  renderProducts();
+  renderCart();
+}
 
 const cart = new Map();
 let activeCategory = "Semua";
@@ -258,5 +271,4 @@ document.getElementById("checkout-form")
     window.open(url, "_blank", "noopener,noreferrer");
   });
 document.getElementById("current-year").textContent = new Date().getFullYear();
-renderProducts();
-renderCart();
+loadProducts();
