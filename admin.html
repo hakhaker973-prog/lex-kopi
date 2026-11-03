@@ -3,29 +3,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin LEX KOPI</title>
+  <title>Admin | LEX KOPI</title>
+
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
 </head>
-<body>
-  <main class="section-wrap">
-    <h1>Admin <em>LEX KOPI.</em></h1>
-    <p>Halaman khusus pemilik kedai.</p>
+<body class="admin-page">
 
-    <form id="admin-login">
-      <label for="admin-email">Email admin</label>
-      <input id="admin-email" type="email" required>
+  <main class="admin-container">
+    <header class="admin-header">
+      <div>
+        <h1>LEX <em>KOPI.</em></h1>
+        <p>Admin Control Center</p>
+      </div>
+      <a href="index.html" class="back-link">Lihat Website</a>
+    </header>
 
-      <label for="admin-password">Password</label>
-      <input id="admin-password" type="password" required>
+    <section id="admin-login" class="admin-panel">
+      <h2>Login Admin</h2>
+      <form id="login-form">
+        <label>Email admin</label>
+        <input id="admin-email" type="email" required>
 
-      <button type="submit">Masuk sebagai admin</button>
-      <p id="login-message"></p>
-    </form>
+        <label>Password</label>
+        <input id="admin-password" type="password" required>
+
+        <button type="submit" class="primary-btn">Masuk</button>
+        <p id="login-message"></p>
+      </form>
+    </section>
 
     <section id="admin-dashboard" hidden>
-      <h2>Dashboard Admin</h2>
-      <p>Login berhasil.</p>
-      <button id="admin-logout" type="button">Keluar</button>
+      <div class="dashboard-heading">
+        <div>
+          <h2>Dashboard</h2>
+          <p>Selamat datang di pengelolaan LEX KOPI.</p>
+        </div>
+        <button id="admin-logout" class="logout-btn">Keluar</button>
+      </div>
+
+      <nav class="admin-nav">
+        <button class="nav-btn active" data-page="overview">Ringkasan</button>
+        <button class="nav-btn" data-page="products">Produk</button>
+        <button class="nav-btn" data-page="orders">Pesanan</button>
+      </nav>
+
+      <section id="page-overview" class="admin-page-section">
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span>Total Produk</span>
+            <strong id="stat-products">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>Total Pesanan</span>
+            <strong id="stat-orders">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>Pesanan Menunggu</span>
+            <strong id="stat-pending">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>Omzet Selesai</span>
+            <strong id="stat-revenue">Rp0</strong>
+          </article>
+        </div>
+      </section>
+
+      <section id="page-products" class="admin-page-section" hidden>
+        <div class="section-heading">
+          <div>
+            <h2>Kelola Produk</h2>
+            <p>Tambah dan atur menu LEX KOPI.</p>
+          </div>
+        </div>
+
+        <form id="product-form" class="admin-panel">
+          <h3 id="product-form-title">Tambah Produk</h3>
+          <input type="hidden" id="product-id">
+
+          <label>Nama Produk</label>
+          <input id="product-name" required>
+
+          <label>Harga (Rp)</label>
+          <input id="product-price" type="number" min="0" required>
+
+          <label>Kategori</label>
+          <input id="product-category" required placeholder="Coffee / Non-coffee / Snack">
+
+          <label>Stok</label>
+          <input id="product-stock" type="number" min="0" step="1" required>
+
+          <label>URL Gambar</label>
+          <input id="product-image" type="url" placeholder="https://..." required>
+
+          <label>Deskripsi</label>
+          <textarea id="product-description" rows="3"></textarea>
+
+          <div class="form-actions">
+            <button type="submit" class="primary-btn" id="save-product">
+              Simpan Produk
+            </button>
+            <button type="button" id="cancel-edit" class="secondary-btn" hidden>
+              Batal
+            </button>
+          </div>
+          <p id="product-message"></p>
+        </form>
+
+        <div class="admin-panel">
+          <h3>Daftar Produk</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Produk</th>
+                  <th>Harga</th>
+                  <th>Kategori</th>
+                  <th>Stok</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="product-list"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="page-orders" class="admin-page-section" hidden>
+        <div class="section-heading">
+          <div>
+            <h2>Pesanan Pelanggan</h2>
+            <p>Periksa transaksi yang masuk.</p>
+          </div>
+          <button id="refresh-orders" class="secondary-btn">Muat ulang</button>
+        </div>
+
+        <div class="admin-panel">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Pelanggan</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Waktu</th>
+                  <th>Detail</th>
+                </tr>
+              </thead>
+              <tbody id="order-list"></tbody>
+            </table>
+          </div>
+          <p id="order-message"></p>
+        </div>
+      </section>
     </section>
   </main>
 
