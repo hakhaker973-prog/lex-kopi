@@ -328,48 +328,47 @@ h1 em,h2 em{font-weight:500;color:var(--green)}
     grid-template-columns: repeat(2, 1fr);
   }
 }
-/* PERBAIKAN HEADER MOBILE LEX KOPI */
-@media (max-width: 620px) {
+/* HEADER MOBILE LEX KOPI */
+@media screen and (max-width: 620px) {
 
   .site-header {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: 1fr auto;
     grid-template-areas:
       "brand cart"
       "nav nav";
-    align-items: center;
     height: auto;
-    min-height: 95px;
-    padding: 10px 5%;
-    row-gap: 10px;
+    min-height: 110px;
+    padding: 12px 5%;
+    row-gap: 12px;
+    align-items: center;
   }
 
   .brand {
     grid-area: brand;
-    min-width: 0;
+    display: flex;
+    align-items: center;
     gap: 8px;
   }
 
-  .brand-mark {
-    flex-shrink: 0;
-  }
-
-  .brand-name {
-    font-size: 12px;
-    white-space: nowrap;
+  .header-cart {
+    grid-area: cart;
+    justify-self: end;
+    font-size: 11px;
+    padding: 7px 10px;
   }
 
   .site-header nav {
     grid-area: nav;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    gap: 22px;
     width: 100%;
-    gap: 5px;
-    font-size: 10px;
-    white-space: nowrap;
     overflow-x: auto;
+    white-space: nowrap;
     scrollbar-width: none;
+    padding-bottom: 4px;
   }
 
   .site-header nav::-webkit-scrollbar {
@@ -377,14 +376,7 @@ h1 em,h2 em{font-weight:500;color:var(--green)}
   }
 
   .site-header nav a {
-    display: inline-block;
     flex-shrink: 0;
-    white-space: nowrap;
-    font-size: 10px;
-  }
-
-  .header-cart {
-    grid-area: cart;
-    justify-self: end;
+    font-size: 11px;
   }
 }
