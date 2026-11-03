@@ -177,6 +177,9 @@ h1 em,h2 em{font-weight:500;color:var(--green)}
   background: var(--white);
   padding: 11px 12px;
   font: inherit;
+  font-size: 11px;
+  color: var(--ink);
+}
     .sales-section {
   padding-top: 60px;
   padding-bottom: 70px;
@@ -325,6 +328,63 @@ h1 em,h2 em{font-weight:500;color:var(--green)}
     grid-template-columns: repeat(2, 1fr);
   }
 }
-  font-size: 11px;
-  color: var(--ink);
+/* PERBAIKAN HEADER MOBILE LEX KOPI */
+@media (max-width: 620px) {
+
+  .site-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand cart"
+      "nav nav";
+    align-items: center;
+    height: auto;
+    min-height: 95px;
+    padding: 10px 5%;
+    row-gap: 10px;
+  }
+
+  .brand {
+    grid-area: brand;
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .brand-mark {
+    flex-shrink: 0;
+  }
+
+  .brand-name {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .site-header nav {
+    grid-area: nav;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 5px;
+    font-size: 10px;
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .site-header nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .site-header nav a {
+    display: inline-block;
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 10px;
+  }
+
+  .header-cart {
+    grid-area: cart;
+    justify-self: end;
+  }
 }
